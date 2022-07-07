@@ -16,7 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -26,7 +25,9 @@ SECRET_KEY = 'django-insecure--dgjd8vw1dcb7uysiv!6fo74$(cq%lcj6bj^r@u$289kld*6l%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -54,10 +55,17 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'spotify.urls'
 
+SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__)) 
+
+# Find templates in the same folder as settings.py.
+TEMPLATE_DIRS = (
+    os.path.join(SETTINGS_PATH, 'templates'),
+)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': TEMPLATE_DIRS,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,7 +73,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'app.apptemplates.load_setting',
             ],
+            'libraries':{
+                'dinotags': 'song.templatetags.dinotags',
+            }
         },
     },
 ]

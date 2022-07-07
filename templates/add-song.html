@@ -1,0 +1,59 @@
+{% extends 'main.html' %}
+{% load static %}
+{% comment %} {% load dinotags %} {% endcomment %}
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+  <br />
+  <div class="card">
+    <div class="card-header">Add Songs</div>
+    <div class="card-body">
+      <form action="{% url 'upload-song'%}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 g-5">
+          <div class="col">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="title" placeholder="Title" name="name" />
+              <label for="title">Title</label>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="datetimepicker4" placeholder="Date Of Release" name="dateOfRelease" />
+              <label for="datetimepicker4">Date Of Release</label>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="form-floating mb-3">
+              <input type="file" class="form-control" id="cover" placeholder="Cover Images" name="cover" f-style="opacity: 0;" />
+              <label for="cover">Cover Images</label>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="mb-3">
+              <label for="example-dropUp">Artist</label>
+              <select id="example-dropUp" class="form-select" name="artist" multiple="multiple" size="5" aria-label="size 5 select example">
+                {% for artist in artists %}
+                  <option value="{{ artist.id }}">{{ artist.name }}</option>
+                {% endfor %}
+                {% comment %} <option data-role="divider"></option> {% endcomment %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      {% comment %} <blockquote class="blockquote mb-0">
+        <p>A well-known quote, contained in a blockquote element.</p>
+        <footer class="blockquote-footer">
+          Someone famous in <cite title="Source Title">Source Title</cite>
+        </footer>
+      </blockquote> {% endcomment %}
+    </div>
+  </div>
+{% endblock %}

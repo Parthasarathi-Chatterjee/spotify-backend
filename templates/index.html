@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+{% load static %}
+{% comment %} {% load dinotags %} {% endcomment %}
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+    <br />
+    {% comment %} {{ songs|to_json }} {% endcomment %}
+    <div class="card">
+        <div class="card-header">Top 10 Songs</div>
+        <div class="card-body">
+            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 g-5">
+                {% for song in songs %}
+                <div class="col">
+                    <div class="card" style="width: 100%;">
+                    <img src="{{ song.cover.url }}" class="card-img-top" alt="{{ song.name }}" />
+                    <div class="card-body">
+                        <h5 class="card-title">{{ song.name }}</h5>
+                        <p class="card-text"></p>
+                        {% comment %} <a href="#" class="btn btn-primary">Go somewhere</a> {% endcomment %}
+                    </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% comment %} <blockquote class="blockquote mb-0">
+                <p>A well-known quote, contained in a blockquote element.</p>
+                <footer class="blockquote-footer">
+                Someone famous in <cite title="Source Title">Source Title</cite>
+                </footer>
+            </blockquote> {% endcomment %}
+        </div>
+    </div>
+
+    <br />
+
+    <div class="card">
+        <div class="card-header">Top 10 Songs</div>
+        <div class="card-body">
+            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 g-5">
+                {% for artist in artists %}
+                <div class="col">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ artist.name }}</h3>
+                            <h5 class="card-title">{{ artist.name }}</h5>
+                            <p class="card-text"></p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

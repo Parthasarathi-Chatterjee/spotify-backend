@@ -21,6 +21,14 @@ class Song(models.Model):
 
     def __str__(self):
         return self.name
+        
+    @property
+    def coverURL(self):
+        try:
+            url = self.cover.url
+        except:
+            url = ''
+        return url
 
 
 class Rating(models.Model):
