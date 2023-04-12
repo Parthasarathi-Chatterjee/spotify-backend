@@ -1,15 +1,11 @@
 from django.contrib import admin
 
-from song.models import Artist, Rating, Song
-
-@admin.register(Artist)
-class ArtistAdmin(admin.ModelAdmin):
-    list_display = ('name', 'bio', 'dob', 'created_by')
+from song.models import Rating, Song
 
 
 @admin.register(Song)
 class SongAdmin(admin.ModelAdmin):
-    list_display = ('name', 'dateOfRelease', 'cover', 'created_by')
+    list_display = ('name', 'dateOfRelease', 'image', 'file', 'created_by')
 
 
 # @admin.register(Rating)

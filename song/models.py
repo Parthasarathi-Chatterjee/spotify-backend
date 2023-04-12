@@ -1,21 +1,13 @@
 from django.db import models
 from django.utils import timezone
 from accounts.models import User
+from artist.models import Artist
 
-class Artist(models.Model):
-    name = models.CharField(max_length=50, default=None, blank=True, null=True)
-    bio = models.CharField(max_length=150, default=None, blank=True, null=True)
-    dob = models.DateTimeField(default=timezone.now)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
-
-    
 class Song(models.Model):
     name = models.CharField(max_length=50, default=None, blank=True, null=True)
     dateOfRelease =  models.DateTimeField(default=timezone.now)
-    cover  = models.ImageField(upload_to='images/posts/')
+    image = models.ImageField(upload_to='images/songs/')
+    file = models.FileField(upload_to='files/songs/')
     artist = models.ManyToManyField(Artist)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 

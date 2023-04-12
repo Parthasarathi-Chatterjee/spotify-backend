@@ -1,42 +1,20 @@
 from django.shortcuts import render, redirect
 
-from .models import Song, Artist
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+from .models import Song
 from .forms import *
 
+from song.serializers import SongSerializer
 
 def index(request):
     songs = Song.objects.all().order_by('?')[:10]
-    artists = Artist.objects.all().order_by('?')[:10]
+    # artists = Artist.objects.all().order_by('?')[:10]
     # print(artists.values())
-    context = {'title': 'Spotify', 'songs': songs, 'artists': artists}
+    context = {'title': 'Spotify', 'songs': songs}
     return render(request, 'index.html', context)
-
-
-def addArtist(request):
-    context = {'title': 'Spotify'}
-    return render(request, 'add-artist.html', context)
-
-def uploadArtist(request):
-    if request.method == 'POST':
-        _mutable = request.POST._mutable
-        # set to mutable
-        request.POST._mutable = True
-        # сhange the values you want
-        request.POST['created_by'] = 1
-        # set mutable flag back
-        request.POST._mutable = _mutable
-
-        form = uploadArtistForm(request.POST, request.FILES)
-        if form.is_valid():
-            print("YES")
-            artistName = request.POST['name']
-            checkArtist = Artist.objects.filter(name = artistName)
-            if not checkArtist:
-                form.save()
-        else:
-            print("No")
-    
-    return redirect('add-artist')
 
 def addSong(request):
     songs = Song.objects.all()
@@ -66,3 +44,13 @@ def uploadSong(request):
             print("No")
     
     return redirect('add-song')
+
+class SongView(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            song = Song.objects.all()
+        except:
+            return Response({}, status = status.HTTP_400_BAD_REQUEST)
+
+        serializer = SongSerializer(song, many = True)
+        return Response(serializer.data, status = status.HTTP_200_OK)
